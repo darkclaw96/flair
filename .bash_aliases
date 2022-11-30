@@ -11,6 +11,7 @@ export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 alias bashrl='source ~/.bashrc'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
+
 # alias ls
 alias ls='exa -al --color=always --group-directories-first' # preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
@@ -23,6 +24,22 @@ alias 644='chmod -R 644'
 alias 666='chmod -R 666'
 alias 755='chmod -R 755'
 alias 777='chmod -R 777'
+# bspwm
+alias bsp='nano ~/.config/bspwm/bspwmrc'
+alias hkd='nano ~/.config/sxhkd/sxhkdrc'
+
+### Interactive file management
+# confirm before overwriting something
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+### Package management
+alias aptup='sudo nala upgrade'
+alias aptupd='sudo apt update'
+alias aptupg='sudo apt upgrade'
+alias aptin='sudo nala install'
+alias aptrm='sudo nala remove'
 
 ### NAVIGATION
 up () {
@@ -41,12 +58,22 @@ up () {
   fi
 }
 # up one level
-alias cd..='cd .. && la'
-alias ..='cd .. && la'
+alias cd..='cd ..'
+alias ..='cd ..'
 # back to previous directory
-alias .-='cd - && la'
+alias .-='cd -'
 # Search files in the current folder
 alias f="find . | grep "
+
+# Automatically do an ls after each cd
+cd ()
+{
+	if [ -n "$1" ]; then
+		builtin cd "$@" && ls
+	else
+		builtin cd ~ && ls
+	fi
+}
 
 ### ARCHIVE EXTRACTION
 # usage: ex <file>
@@ -103,19 +130,4 @@ function whatsmyip ()
 	echo -n "External IP: " ; wget http://smart-ip.net/myip -O - -q
 }
 
-### Interactive file management
-# confirm before overwriting something
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
 
-### Package management
-alias aptup='sudo nala upgrade'
-alias aptupd='sudo apt update'
-alias aptupg='sudo apt upgrade'
-alias aptin='sudo nala install'
-alias aptrm='sudo nala remove'
-
-# bspwm
-alias bsp='nano ~/.config/bspwm/bspwmrc'
-alias hkd='nano ~/.config/sxhkd/sxhkdrc'
