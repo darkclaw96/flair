@@ -69,9 +69,9 @@ alias f="find . | grep "
 cd ()
 {
 	if [ -n "$1" ]; then
-		builtin cd "$@" && ls
+		builtin cd "$@" && la
 	else
-		builtin cd ~ && ls
+		builtin cd ~ && la
 	fi
 }
 
