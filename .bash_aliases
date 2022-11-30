@@ -7,6 +7,8 @@ command echo -e "\n\tThaaru maaru Thakkali soru!\n"
 export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 
 ### ALIASES
+# edit bash aliases
+alias brc='vim ~/.bash_aliases'
 # reload bashrc
 alias bashrl='source ~/.bashrc'
 # get error messages from journalctl
