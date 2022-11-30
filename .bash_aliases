@@ -107,6 +107,7 @@ ex ()
 gitbash() 
 {
 	rm -rf ~/.bash_aliases
-	wget https://github.com/darkclaw96/linuxconf/raw/main/.bash_aliases -O ~/.bash_aliases
+	cd
+	wget https://github.com/darkclaw96/linuxconf/raw/main/.bash_aliases
 	bashrl
 }
