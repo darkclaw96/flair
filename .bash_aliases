@@ -1,45 +1,87 @@
-#startup command
+### STARTUP
 command neofetch
 command echo -e "\n\tThaaru maaru Thakkali soru!\n"
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+### EXPORT
+# monitor name
+export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+### ALIASES
+# reload bashrc
+alias bashrl='source ~/.bashrc'
 
-#general aliases
-alias bashrl='. ~/.bashrc'
+# get error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
 
-#ls
-export LS_OPTIONS='--color=auto'
-eval "$(dircolors)"
-alias ls='ls $LS_OPTIONS -a'
-alias la='ls $LS_OPTIONS -lahF'
-#alias ll='ls $LS_OPTIONS -l'
+# ls
+alias ls='exa -al --color=always --group-directories-first' # preferred listing
+alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -l --color=always --group-directories-first'  # long format
+alias lt='exa -aT --color=always --group-directories-first' # tree listing
 
-#Navigation
+### NAVIGATION
+up () {
+  local d=""
+  local limit="$1"
+  # Default to limit of 1
+  if [ -z "$limit" ] || [ "$limit" -le 0 ]; then
+    limit=1
+  fi
+  for ((i=1;i<=limit;i++)); do
+    d="../$d"
+  done
+  # perform cd. Show error if cd fails
+  if ! cd "$d"; then
+    echo "Couldn't go up $limit dirs.";
+  fi
+}
+
+# up one level
 alias ..='cd .. && ls'
+
+# back to previous directory
 alias .-='cd - && ls'
 
-#Interactive file management:
-#alias rm='rm -i'
-#alias cp='cp -i'
-#alias mv='mv -i'
+### ARCHIVE EXTRACTION
+# usage: ex <file>
+ex ()
+{
+  if [ -f "$1" ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
-#apt
-alias aptup='sudo nala update && sudo nala upgrade'
-alias aptupd='sudo nala update'
-alias aptupg='sudo nala upgrade'
+### Interactive file management
+# confirm before overwriting something
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+### Package management
+alias aptup='sudo nala upgrade'
+alias aptupd='sudo apt update'
+alias aptupg='sudo apt upgrade'
 alias aptin='sudo nala install'
 alias aptrm='sudo nala remove'
 
-#bspwm
+# bspwm
 alias bsp='nano ~/.config/bspwm/bspwmrc'
 alias hkd='nano ~/.config/sxhkd/sxhkdrc'
