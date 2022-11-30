@@ -34,9 +34,9 @@ up () {
   fi
 }
 # up one level
-alias ..='cd .. && ls'
+alias ..='cd .. && la'
 # back to previous directory
-alias .-='cd - && ls'
+alias .-='cd - && la'
 
 ### ARCHIVE EXTRACTION
 # usage: ex <file>
