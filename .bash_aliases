@@ -9,10 +9,8 @@ export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 ### ALIASES
 # reload bashrc
 alias bashrl='source ~/.bashrc'
-
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
-
 # ls
 alias ls='exa -al --color=always --group-directories-first' # preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
@@ -35,10 +33,8 @@ up () {
     echo "Couldn't go up $limit dirs.";
   fi
 }
-
 # up one level
 alias ..='cd .. && ls'
-
 # back to previous directory
 alias .-='cd - && ls'
 
