@@ -15,7 +15,7 @@ apt update
 apt upgrade -y
 
 # Installing Essential Programs 
-apt install bspwm sxhkd kitty rofi polybar picom pcmanfm nitrogen lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme lxappearance fonts-noto-color-emoji -y
+apt install bspwm sxhkd kitty rofi polybar picom pcmanfm nitrogen htop lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme lxappearance fonts-noto-color-emoji -y
 
 # Install brave-browser
 git clone https://github.com/djoma98/debian-brave
