@@ -14,6 +14,19 @@ builddir=$(pwd)
 apt update
 apt upgrade -y
 
+# Set cron job to check for updates
+echo "\n\tSetting up cron job for apt updates"
+echo "#check for apt updates every 10 mins" >> $builddir/aptupd
+echo "*/10 * * * * root apt update" >> $builddir/aptupd
+cp $builddir/aptupd /etc/cron.d
+if [ -f /etc/cron.d/aptupd ];
+then
+  echo -e "\tCron job created\n"
+  rm $builddir/aptupd
+else
+  echo -e "\n\tCron job not created. Do it manually\n"
+fi
+
 # Installing Essential Programs 
 apt install bspwm sxhkd kitty rofi polybar picom pcmanfm nitrogen htop lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme lxappearance fonts-noto-color-emoji -y
 
