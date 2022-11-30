@@ -11,7 +11,8 @@ export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 alias bashrl='source ~/.bashrc'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
-
+# ping
+alias ping='ping -c 10'
 # alias ls
 alias ls='exa -al --color=always --group-directories-first' # preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
@@ -102,32 +103,10 @@ ex ()
   fi
 }
 
-### Show current network information
-netinfo ()
+### Sync bash aliases from github
+gitbash() 
 {
-	echo "--------------- Network Information ---------------"
-	/sbin/ifconfig | awk /'inet addr/ {print $2}'
-	echo ""
-	/sbin/ifconfig | awk /'Bcast/ {print $3}'
-	echo ""
-	/sbin/ifconfig | awk /'inet addr/ {print $4}'
-
-	/sbin/ifconfig | awk /'HWaddr/ {print $4,$5}'
-	echo "---------------------------------------------------"
+	rm -rf ~/.bash_aliases
+	wget https://github.com/darkclaw96/linuxconf/raw/.bash_aliases -O ~/.bash_aliases
+	bashrl
 }
-
-### IP address lookup
-alias whatismyip="whatsmyip"
-function whatsmyip ()
-{
-	# Dumps a list of all IP addresses for every device
-	# /sbin/ifconfig |grep -B1 "inet addr" |awk '{ if ( $1 == "inet" ) { print $2 } else if ( $2 == "Link" ) { printf "%s:" ,$1 } }' |awk -F: '{ print $1 ": " $3 }';
-
-	# Internal IP Lookup
-	echo -n "Internal IP: " ; /sbin/ifconfig eth0 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'
-
-	# External IP Lookup
-	echo -n "External IP: " ; wget http://smart-ip.net/myip -O - -q
-}
-
-
