@@ -16,7 +16,6 @@ apt upgrade -y
 
 # Making .config and Moving config files and background to Pictures
 cd $builddir
-mkdir -p /home/$username/.config
 mkdir -p /home/$username/.fonts
 mkdir -p /home/$username/Pictures
 #mkdir -p /usr/share/sddm/themes
@@ -43,7 +42,7 @@ else
 fi
 
 # Installing Essential Programs 
-apt install bspwm sxhkd kitty rofi polybar picom pcmanfm nitrogen htop lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme lxappearance fonts-noto-color-emoji -y
+apt install bspwm sxhkd kitty xdo rofi polybar picom pcmanfm nitrogen nm-tray caffeine htop lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme lxappearance fonts-noto-color-emoji -y
 
 # Download Nordic Theme
 cd /usr/share/themes/
