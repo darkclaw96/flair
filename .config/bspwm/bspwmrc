@@ -2,17 +2,20 @@
 
 #### AUTOSTART #### 
 pgrep -x sxhkd > /dev/null || sxhkd &       # Hotkey daemon 
+
+xrandr --output $DISP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+
 picom &                                     # Compositor
 nitrogen --random --set-zoom-fill &         # Wallpaper
 ./.config/bspwm/launch.sh &                 # Launch bspwm
 bash ~/.config/polybar/mybar/launch.sh      # Polybar
-killall caffeine && caffeine-indicator &    # Caffeine systray
-killall nm-tray && nm-tray &                # Networkmanager systray
+killall caffeine-indicator
+caffeine-indicator &                        # Caffeine systray
+killall nm-tray
+nm-tray &                                   # Networkmanager systray
 
 #### MONITORS ####
 bspc monitor $DISP1 -d 1 2 3 4 5 6 7 8 9 0
-
-xrandr --output $DISP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
 
 #### WM CONFIG ####
 #bspc config border_radius                8
