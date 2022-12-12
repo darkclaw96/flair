@@ -43,6 +43,7 @@ alias aptupd='sudo apt update'
 alias aptupg='sudo apt upgrade'
 alias aptin='sudo nala install'
 alias aptrm='sudo nala remove'
+alias apts='nala search'
 
 ### NAVIGATION
 up () {
