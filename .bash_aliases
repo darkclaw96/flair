@@ -108,7 +108,7 @@ ex ()
 ### Sync bash aliases from github
 gitbash() 
 {
-	rm -rf ~/.bash_aliases
+	mv ~/.bash_aliases ~/.bash_aliases.bk
 	cd
 	wget https://github.com/darkclaw96/linuxconf/raw/main/.bash_aliases
 	bashrl
