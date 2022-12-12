@@ -27,15 +27,12 @@ alias 644='chmod -R 644'
 alias 666='chmod -R 666'
 alias 755='chmod -R 755'
 alias 777='chmod -R 777'
+# alias xrandr
+alias s1080='xrandr -s 1920x1080'
+alias s720='xrandr -s 1280x720'
 # bspwm
 alias bsp='nano ~/.config/bspwm/bspwmrc'
 alias hkd='nano ~/.config/sxhkd/sxhkdrc'
-
-### Interactive file management
-# confirm before overwriting something
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
 
 ### Package management
 alias aptup='sudo nala upgrade'
@@ -68,7 +65,6 @@ alias ..='cd ..'
 alias .-='cd -'
 # Search files in the current folder
 alias f="find . | grep "
-
 # Automatically do an ls after each cd
 cd ()
 {
@@ -79,6 +75,11 @@ cd ()
 	fi
 }
 
+### Interactive file management
+# confirm before overwriting something
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 ### ARCHIVE EXTRACTION
 # usage: ex <file>
 ex ()
