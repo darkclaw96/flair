@@ -1,6 +1,9 @@
 ### STARTUP
-command neofetch
-command echo -e "\n\tThaaru maaru Thakkali soru!\n"
+command hello.sh
+
+### PATH
+export PATH="$HOME/bin/:$PATH"
+export PATH="/home/prem/.local/bin:$PATH" #for pip
 
 ### EXPORT
 # monitor name
@@ -8,9 +11,9 @@ export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 
 ### ALIASES
 # edit bash aliases
-alias brc='vim ~/.bash_aliases'
+alias brc='vim $HOME/.bash_aliases'
 # reload bashrc
-alias bashrl='source ~/.bashrc'
+alias bashrl='source $HOME/.bashrc'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 # ping
@@ -31,8 +34,8 @@ alias 777='chmod -R 777'
 alias s1080='xrandr -s 1920x1080'
 alias s720='xrandr -s 1280x720'
 # bspwm
-alias bsp='nano ~/.config/bspwm/bspwmrc'
-alias hkd='nano ~/.config/sxhkd/sxhkdrc'
+alias bsp='vim $HOME/.config/bspwm/bspwmrc'
+alias hkd='vim $HOME/.config/sxhkd/sxhkdrc'
 
 ### Package management
 alias aptup='sudo nala upgrade'
@@ -115,3 +118,11 @@ gitbash()
 	wget https://github.com/darkclaw96/linuxconf/raw/main/.bash_aliases
 	bashrl
 }
+
+### SOURCE
+# bash-insulter
+if [ -f /etc/bash.command-not-found ]; then
+    . /etc/bash.command-not-found
+fi
+
+
