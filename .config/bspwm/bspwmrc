@@ -1,33 +1,31 @@
-#! /bin/sh
+#!/bin/sh
 
 #### AUTOSTART #### 
-pgrep -x sxhkd > /dev/null || sxhkd &       # Hotkey daemon 
-
-xrandr --output $DISP1 --primary --mode 1920x1080 --pos 0x0 --rotate normal
-
-picom &                                     # Compositor
-nitrogen --random --set-zoom-fill &         # Wallpaper
-./.config/bspwm/launch.sh &                 # Launch bspwm
-bash ~/.config/polybar/mybar/launch.sh      # Polybar
-killall caffeine-indicator
-caffeine-indicator &                        # Caffeine systray
-killall nm-tray
-nm-tray &                                   # Networkmanager systray
+pgrep -x sxhkd > /dev/null || sxhkd &       
+# Hotkey daemon 
+picom &
+# Compositor
+nitrogen --random --set-zoom-fill &         
+# Wallpaper
+~/.config/polybar/cuts/launch.sh
+# Polybar panel
+pgrep -x nm-applet > /dev/null || nm-applet &                                   
+# Networkmanager systray
 
 #### MONITORS ####
-bspc monitor $DISP1 -d 1 2 3 4 5 6 7 8 9 0
+bspc monitor $DISP1 -d I II III IV V
 
 #### WM CONFIG ####
 #bspc config border_radius                8
 bspc config border_width                  2
-bspc config window_gap                    10
+bspc config window_gap                    6
 #bspc config top_padding                   20
 #bspc config bottom_padding                0
 #bspc config left_padding                  0
 #bspc config right_padding                 0
 bspc config single_monocle                false
 bspc config click_to_focus                true
-bspc config split_ratio                   0.50
+bspc config split_ratio                   0.52
 bspc config borderless_monocle            true
 bspc config gapless_monocle               true
 bspc config focus_by_distance             true
@@ -39,7 +37,9 @@ bspc config pointer_modifier              mod4            # Super
 bspc config pointer_action1               move            # Left-click
 bspc config pointer_action2               resize_side     # Right-click
 bspc config pointer_action3               resize_corner   # Middle-click
+
 wmname LG3D                                               #to handle java based programs
+xsetroot -cursor_name left_ptr &                          #to set default pointer 
 
 #### COLORS ####
 bspc config normal_border_color		      "#4c566a"
@@ -49,12 +49,13 @@ bspc config presel_feedback_color	      "#5e81ac"
 bspc config urgent_border_color 	      "#dd2727"
 
 #### WINDOW RULES #####
-#polybar hidden when fullscreen for vlc, youtube, mpv ... 
-#find out the name of your monitor with xrandr 
-xdo below -t $(xdo id -n root) $(xdo id -a polybar-main_DisplayPort-0) 
-xdo below -t $(xdo id -n root) $(xdo id -a polybar-main_DisplayPort-1) 
-xdo below -t $(xdo id -n root) $(xdo id -a polybar-main_HDMI-A-0) 
+# For polybar, set wm-restack in config to bspwm to hide when fullscreen for vlc, youtube, mpv ... 
 
+bspc rule -a 'firefox:Toolkit:Picture-in-Picture' state=floating      # Firefox PiP
+bspc rule -a '*:yad' state=floating focus=on
+bspc rule -a Lxappearance state=floating
+
+#examples
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
