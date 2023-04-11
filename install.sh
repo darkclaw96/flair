@@ -45,7 +45,7 @@ fi
 apt install bspwm sxhkd kitty xdo rofi polybar picom pcmanfm nitrogen nm-tray caffeine \
             htop lxpolkit x11-xserver-utils unzip yad wget pulseaudio pavucontrol vlc \
             nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme \
-            lxappearance fonts-noto-color-emoji -y
+            lxappearance fonts-noto-color-emoji yad -y
 
 # Download Nordic Theme
 cd /usr/share/themes/
