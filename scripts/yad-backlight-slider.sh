@@ -1,5 +1,6 @@
 #!/bin/sh
 # Needs sudo chmod a+x for $BrCur (or) run as sudo
+# Might require an udev rule to prevent the permissions getting revoked
 BrPath='/sys/class/backlight/intel_backlight/'
 BrCur=`cat ${BrPath}brightness`
 BrMax=`cat ${BrPath}max_brightness`
