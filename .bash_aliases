@@ -2,7 +2,7 @@
 command hello.sh
 
 ### PATH
-export PATH="$HOME/bin/:$PATH"
+export PATH="$HOME/scripts/:$PATH"
 export PATH="/home/prem/.local/bin:$PATH" #for pip
 
 ### EXPORT
@@ -10,10 +10,13 @@ export PATH="/home/prem/.local/bin:$PATH" #for pip
 export DISP1="$(xrandr | grep connected | awk '{print $1}')"
 
 ### ALIASES
+#vim
+alias v='vim'
 # edit bash aliases
-alias brc='vim $HOME/.bash_aliases'
+alias brc='vim $HOME/.bashrc'
+alias bal='vim $HOME/.bash_aliases'
 # reload bashrc
-alias bashrl='source $HOME/.bashrc'
+alias brl='source $HOME/.bashrc'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 # ping
