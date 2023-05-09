@@ -14,7 +14,7 @@ d = display.Display()
 width_in_pixels = d.screen().width_in_pixels
 height_in_pixels = d.screen().height_in_pixels
 
-cornerSize = 3
+cornerSize = 3 # Pixels
 
 config = configparser.ConfigParser()
 config.read(os.path.expanduser("~/.config/corneredconf"))
@@ -30,10 +30,10 @@ try:
     top_right_command = config.get("config", "top_right")
     bottom_right_command = config.get("config", "bottom_right")
 
-    top_left_timeout = config.getfloat("config", "top_left_timeout")
-    bottom_left_timeout = config.getfloat("config", "bottom_left_timeout")
-    top_right_timeout = config.getfloat("config", "top_right_timeout")
-    bottom_right_timeout = config.getfloat("config", "bottom_right_timeout")
+    top_left_timeout = config.getfloat("config", "top_left_timeout", fallback=0.5)
+    bottom_left_timeout = config.getfloat("config", "bottom_left_timeout", fallback=0.5)
+    top_right_timeout = config.getfloat("config", "top_right_timeout", fallback=0.5)
+    bottom_right_timeout = config.getfloat("config", "bottom_right_timeout", fallback=0.5)
 
 except configparser.NoSectionError:
     print("Config file incorrect or missing from ~/.config/corneredconf")
@@ -69,5 +69,5 @@ while True:
             exec_command(bottom_right_command.split(' '))
             time.sleep(bottom_right_timeout)
 
-    time.sleep(1)
+    time.sleep(1) # Checks every second for activity
 
