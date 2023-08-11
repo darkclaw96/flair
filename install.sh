@@ -39,7 +39,7 @@ fi
 
 # Installing Essential Programs 
 apt install bspwm sxhkd kitty xdo xdotool xserver-xorg-input-libinput rofi polybar picom pcmanfm \
-            nitrogen network-manager-gnome suckless-tools caffeine redshift-gtk lightdm \
+            nitrogen network-manager-gnome suckless-tools caffeine redshift-gtk \
             htop lxpolkit x11-xserver-utils unzip wget pulseaudio pulsemixer pavucontrol vlc \
             nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme \
             lxappearance yad w3m dunst build-essential libpam0g-dev libxcb-xkb-dev -y
