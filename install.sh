@@ -42,7 +42,7 @@ apt install bspwm sxhkd kitty xdo xdotool xserver-xorg-input-libinput rofi polyb
             nitrogen network-manager-gnome suckless-tools caffeine redshift-gtk lightdm \
             htop lxpolkit x11-xserver-utils unzip wget pulseaudio pulsemixer pavucontrol vlc \
             nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme \
-            lxappearance yad w3m dunst -y
+            lxappearance yad w3m dunst build-essential libpam0g-dev libxcb-xkb-dev -y
 
 # Download Nordic Theme
 cd /usr/share/themes/
@@ -80,9 +80,20 @@ chmod +x install.sh
 cd $builddir
 rm -rf debian-brave
 
-# Install webapp-manager
+# some source installs
 mkdir $HOME/sourceinstalls
+
+# Install ly loginmanager
 cd sourceinstalls
+git clone --recurse-submodules https://github.com/fairyglade/ly
+cd ly
+make
+make install installsystemd
+systemctl enable ly.service
+systemctl disable getty@tty2.service
+
+# Install webapp-manager
+cd $HOME/sourceinstalls
 git clone https://github.com/linuxmint/webapp-manager.git
 cd webapp-manager
 apt install gir1.2-xapp-1.0 python3 python3-bs4 python3-configobj \
