@@ -92,7 +92,7 @@ make
 make install installsystemd
 systemctl enable ly.service
 systemctl disable getty@tty2.service
-echo -e "#\n# Configured by Installscript\n#\nanimate=true\nbigclock=true\nblank_box=true\nhide_borders=true" >> /etc/ly/config.ini
+echo -e "#\n# Configured by Installscript\n#\nanimate=true\nbigclock=true\nblank_box=true\nhide_borders=true\nblank_password=true" >> /etc/ly/config.ini
 cd $builddir
 
 # Install webapp-manager
