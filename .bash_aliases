@@ -1,13 +1,9 @@
-### STARTUP
-command hello.sh
-
 ### PATH
-export PATH="$HOME/scripts/:$PATH"
-export PATH="/home/prem/.local/bin:$PATH" #for pip
+export PATH="$HOME/scripts/:$PATH" #for scripts
+export PATH="$HOME/.local/bin:$PATH" #for pip
 
-### EXPORT
-# monitor name
-export DISP1="$(xrandr | grep connected | awk '{print $1}')"
+## STARTUP
+command hello.sh
 
 ### ALIASES
 #vim
@@ -128,4 +124,5 @@ if [ -f /etc/bash.command-not-found ]; then
     . /etc/bash.command-not-found
 fi
 
-
+### Remove duplicates in PATH
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
