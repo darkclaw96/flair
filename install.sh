@@ -84,7 +84,8 @@ rm -rf debian-brave
 mkdir $HOME/sourceinstalls
 
 # Install ly loginmanager
-cd sourceinstalls
+cd $HOME/sourceinstalls
+apt install build-essential libpam0g-dev libxcb-xkb-dev
 git clone --recurse-submodules https://github.com/fairyglade/ly
 cd ly
 make
@@ -92,6 +93,7 @@ make install installsystemd
 systemctl enable ly.service
 systemctl disable getty@tty2.service
 echo -e "#\n# Configured by Installscript\n#\nanimate=true\nbigclock=true\nblank_box=true\nhide_borders=true" >> /etc/ly/config.ini
+cd $builddir
 
 # Install webapp-manager
 cd $HOME/sourceinstalls
