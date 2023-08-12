@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the location
-location=""
+location="Cologne"
 
 # Get the formatted weather information from wttr.in
 weather=$(curl -s "wttr.in/$location?format=%c\n%C\n%t\n%w" -H "Accept-Language: en" --compressed)
@@ -33,7 +33,7 @@ while getopts ":sftim" opt; do
       ;;
     m)
         # Print icon and temperature
-        temp=$(echo "$temperature" | awk -F "°" '{print $1}') # remove °C to save space
+        temp=$(echo "$temperature" | awk -F "°" '{print $1}')
         echo -e "${icon:0:1}$temp"
       ;;
      esac

@@ -1,31 +1,37 @@
 #!/bin/sh
 
-#### AUTOSTART #### 
-pgrep -x sxhkd > /dev/null || sxhkd &       
-# Hotkey daemon 
-picom &
-# Compositor
-nitrogen --random --set-zoom-fill &         
-# Wallpaper
-~/.config/polybar/cuts/launch.sh
-# Polybar panel
-pgrep -x nm-applet > /dev/null || nm-applet &                                   
-# Networkmanager systray
+#### AUTOSTART ####
+## SCRIPTS ##
+pgrep -x bspswallow|| exec $HOME/scripts/bspswallow &
+pgrep -x xdocorner || exec $HOME/scripts/xdocorner &
+pgrep -x sxhkd > /dev/null || sxhkd & #Hotkey daemon
+picom -fb & #Compositor
+nitrogen --restore & #set wallpaper
+
+# Reload Polybar when bspwm is restarted
+killall polybar && sleep 0.2
+polybar -q bar --config=$HOME/.config/polybar/config.ini &
+
+pgrep -x kdeconnect-indicator > /dev/null | kdeconnect-indicator & #KDEConnect
+#pgrep -x nm-applet > /dev/null || nm-applet & #network-manager-gnome systray
+#killall blueman-tray && blueman-tray & #Bluetooth systray
+pgrep -x redshift-gtk > /dev/null||redshift-gtk & #Redshift
+pgrep -x caffeine-indicator > /dev/null || cafeine-indicator &  #Caffeine
 
 #### MONITORS ####
-bspc monitor $DISP1 -d I II III IV V
+bspc monitor $DISP1 -d 1 2 3 
 
 #### WM CONFIG ####
-#bspc config border_radius                8
-bspc config border_width                  2
-bspc config window_gap                    6
+#bspc config border_radius                 8
+bspc config border_width                  3
+bspc config window_gap                    3
 #bspc config top_padding                   20
 #bspc config bottom_padding                0
 #bspc config left_padding                  0
 #bspc config right_padding                 0
 bspc config single_monocle                false
 bspc config click_to_focus                true
-bspc config split_ratio                   0.52
+bspc config split_ratio                   0.5
 bspc config borderless_monocle            true
 bspc config gapless_monocle               true
 bspc config focus_by_distance             true
@@ -39,23 +45,24 @@ bspc config pointer_action2               resize_side     # Right-click
 bspc config pointer_action3               resize_corner   # Middle-click
 
 wmname LG3D                                               #to handle java based programs
-xsetroot -cursor_name left_ptr &                          #to set default pointer 
+xsetroot -cursor_name left_ptr &                          #to set default pointer
+
 
 #### COLORS ####
-bspc config normal_border_color		      "#4c566a"
-bspc config active_border_color	        "#1e1e1e"
-bspc config focused_border_color	      "#5e81ac"
-bspc config presel_feedback_color	      "#5e81ac"
-bspc config urgent_border_color 	      "#dd2727"
+bspc config normal_border_color               "#4c566a"
+bspc config active_border_color         "#5e81ac"
+bspc config focused_border_color              "#43e1f0"
+bspc config presel_feedback_color             "#5e81ac"
+bspc config urgent_border_color               "#dd2727"
 
 #### WINDOW RULES #####
-# For polybar, set wm-restack in config to bspwm to hide when fullscreen for vlc, youtube, mpv ... 
-
-bspc rule -a 'firefox:Toolkit:Picture-in-Picture' state=floating      # Firefox PiP
 bspc rule -a '*:yad' state=floating focus=on
-bspc rule -a Lxappearance state=floating
 
-#examples
+bspc rule -a 'Brave-browser' desktop='^1' follow=on focus=on
+bspc rule -a 'firefox:*:*' desktop='^2' follow=on focus=on
+bspc rule -a 'Jellyfin Media Player' desktop='^3' follow=on focus=on
+
+# examples
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating

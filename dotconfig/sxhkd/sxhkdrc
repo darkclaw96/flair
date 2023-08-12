@@ -2,29 +2,39 @@
 # wm independent hotkeys
 #
 
-# terminal emulator
+# terminal emulator or launcher
 super + {_, shift +} Return
-        {kitty, xterm}
-
+        {kitty, rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/polybar/scripts/rofi/launcher.rasi}
+        
 # program launcher
 super + {_, shift +} @space
-        {dmenu_run, rofi -no-config -no-lazy-grab -show drun -modi drun}
+        {dmenu_run, }
 
 # make sxhkd reload its configuration files:
 super + Escape
-        pkill -USR1 -x sxhkd
+        pkill -USR1 -x sxhkd && notify-send "sxhkd" "Reloaded"
 
 # kill current window
 super + shift + c
-        xdotool getwindowfocus windowkill
+    	xdotool getwindowfocus windowkill
 
-# brightness control (intel only?)
+# screenshot
+super + {_, shift + } p
+        flameshot {gui, full -c} 
+
+# volume
+{XF86AudioRaiseVolume, XF86AudioLowerVolume} 
+        pulsemixer --change-volume {+, -}5
+XF86AudioMute
+        pulsemixer --toggle-mute
+
+# brightness    
+{XF86MonBrightnessUp, XF86MonBrightnessDown}
+        bash ~/.config/polybar/scripts/polybar-ipc-brightness.sh -{i,d}
+
+# browser 
 super + {_, shift + } b
-        yad-backlight-slider.sh -{i,d}
-
-# Maybe volume
-# super + {comma,period}
-
+    	{brave-browser,firefox}
 
 #
 # bspwm hotkeys
@@ -38,13 +48,9 @@ super + alt + {q,r}
 super + m
         bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + y
-        bspc node newest.marked.local -n newest.!automatic.local
-
 # swap the current node and the biggest window
 super + g
-        bspc node -s biggest.window
+        bspc node -s biggest.window.local
 
 #
 # state/flags
@@ -54,10 +60,6 @@ super + g
 super + {t,shift + t,s,f}
         bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
-# set the node flags
-super + ctrl + {m,x,y,z}
-        bspc node -g {marked,locked,sticky,private}
-
 #
 # focus/swap
 #
@@ -66,23 +68,9 @@ super + ctrl + {m,x,y,z}
 super + {_,shift + }{h,j,k,l}
         bspc node -{f,s} {west,south,north,east}
 
-# focus the next/previous window in the current desktop
-super + {_,shift + }c
-        bspc node -f {next,prev}.local.!hidden.window
-
-# focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-        bspc desktop -f {prev,next}.local
-
-# focus the last node/desktop
-super + {grave,Tab}
-        bspc {node,desktop} -f last
-
-# focus the older or newer node in the focus history
-super + {o,i}
-        bspc wm -h off; \
-        bspc node {older,newer} -f; \
-        bspc wm -h on
+# focus the next window in the current/next desktop
+super + {_, shift + } Tab 
+        bspc {node -f next, desktop -f next}.!hidden.window
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}

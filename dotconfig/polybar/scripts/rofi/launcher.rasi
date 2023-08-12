@@ -1,5 +1,5 @@
 configuration {
-	font:							"Iosevka Nerd Font 14";
+	font:							"Iosevka Nerd Font 24";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"";
@@ -25,7 +25,7 @@ window {
 	border:							0px;
 	border-color:					@ac;
     border-radius:                  0px;
-	width:							500px;
+	width:							690px;
     location:                       center;
     x-offset:                       0;
     y-offset:                       0;
@@ -36,7 +36,7 @@ prompt {
 	padding: 						0px;
 	background-color: 				@al;
 	text-color: 					@ac;
-	font:							"feather 12";
+	font:							"feather 24";
 }
 
 entry {
@@ -94,7 +94,7 @@ element {
 element-icon {
     background-color:               transparent;
     text-color:               		inherit;
-    size:                           24px;
+    size:                           36px;
     border:                         0px;
 }
 
