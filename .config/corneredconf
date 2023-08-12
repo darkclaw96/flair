@@ -1,9 +1,0 @@
-[config]
-top_left = polybar-msg cmd toggle
-top_left_timeout = 1.0
-bottom_left = 
-bottom_left_timeout = 0.5
-top_right = 
-top_right_timeout = 0.5
-bottom_right = 
-bottom_right_timeout = 1.0
