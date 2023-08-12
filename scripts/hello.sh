@@ -18,3 +18,4 @@ else
 fi
 
 echo -e "\n\t$(tput setaf $random_color)${random_message}$(tput sgr0)\n"
+
