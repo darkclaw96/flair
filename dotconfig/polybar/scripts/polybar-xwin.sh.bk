@@ -1,0 +1,13 @@
+#!/bin/bash
+
+WM_DESKTOP=$(xdotool getwindowfocus)
+
+if [ -z "$WM_DESKTOP" ]; then
+    echo -e "\n"
+else
+    WM_CLASS=$(xprop -id $(xdotool getactivewindow 2>/dev/null) WM_CLASS 2>/dev/null| awk 'NF {print $NF}' | sed 's/"/ /g')
+
+	WM_NAME=$(xprop -id $(xdotool getactivewindow 2>/dev/null) WM_NAME 2>/dev/null| cut -d '=' -f 2 | awk -F\" '{ print $2 }')
+
+	echo -e ${WM_NAME:0:$1}
+fi
