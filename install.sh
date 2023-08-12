@@ -19,8 +19,7 @@ cd $builddir
 mkdir -p /home/$username/Pictures
 cp .Xresources /home/$username
 cp .Xnord /home/$username
-#cp -R dotconfig/* /home/$username/.config/
-#cp bg.jpg /home/$username/Pictures/
+cp -R dotconfig/* /home/$username/.config/
 mv user-dirs.dirs /home/$username/.config
 chown -R $username:$username /home/$username
 
@@ -37,12 +36,12 @@ else
   echo -e "\n\tCron job not created. Do it manually\n"
 fi
 
-# Installing Essential Programs 
+# Installing Essential Programs
 apt install bspwm sxhkd kitty xdo xdotool xserver-xorg-input-libinput rofi polybar picom pcmanfm \
             nitrogen network-manager-gnome suckless-tools caffeine redshift-gtk \
             htop lxpolkit x11-xserver-utils unzip wget pulseaudio pulsemixer pavucontrol vlc \
             nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme \
-            lxappearance yad w3m dunst build-essential libpam0g-dev libxcb-xkb-dev -y
+            lxappearance yad w3m dunst libnotify-bin build-essential libpam0g-dev libxcb-xkb-dev -y
 
 # Download Nordic Theme
 cd /usr/share/themes/
@@ -50,7 +49,7 @@ git clone https://github.com/EliverLara/Nordic.git
 
 # Installing fonts
 cd $builddir
-apt install fonts-font-awesome fonts-noto-color-emoji 
+apt install fonts-font-awesome fonts-noto-color-emoji
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 unzip FiraCode.zip -d /home/$username/.fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
@@ -66,6 +65,7 @@ fc-cache -vf
 rm ./FiraCode.zip ./Meslo.zip
 
 # Install Nordzy cursor
+echo -e "\nInstalling Nordzy cursors... "
 git clone https://github.com/alvatip/Nordzy-cursors
 cd Nordzy-cursors
 ./install.sh
@@ -73,6 +73,7 @@ cd $builddir
 rm -rf Nordzy-cursors
 
 # Install brave-browser
+echo -e "\nInstalling brave browser"
 git clone https://github.com/djoma98/debian-brave
 cd debian-brave
 chmod +x install.sh
