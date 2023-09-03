@@ -37,7 +37,7 @@ else
 fi
 
 # Installing Essential Programs
-apt install bspwm sxhkd kitty xdo xdotool xserver-xorg-input-libinput rofi polybar picom pcmanfm \
+apt install bspwm sxhkd kitty xdo xdotool xserver-xorg-input-libinput rofi polybar picom pcmanfm 7zip \
             nitrogen network-manager-gnome suckless-tools caffeine redshift-gtk \
             htop lxpolkit x11-xserver-utils unzip wget pulseaudio pulsemixer pavucontrol vlc \
             nala exa neofetch flameshot psmisc mangohud vim lxappearance papirus-icon-theme \
@@ -49,7 +49,7 @@ git clone https://github.com/EliverLara/Nordic.git
 
 # Installing fonts
 cd $builddir
-apt install fonts-font-awesome fonts-noto-color-emoji
+apt install fonts-font-awesome fonts-noto-color-emoji fonts-ipaexfont
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 unzip FiraCode.zip -d /home/$username/.fonts
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip
