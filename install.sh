@@ -86,6 +86,7 @@ rm -rf debian-brave
 mkdir $HOME/sourceinstalls
 
 # Install bsp-layouts
+cd $HOME/sourceinstalls
 curl https://raw.githubusercontent.com/phenax/bsp-layout/master/install.sh | bash -;
 
 # Install ly loginmanager
