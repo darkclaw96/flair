@@ -80,20 +80,27 @@ chmod +x install.sh
 cd $builddir
 rm -rf debian-brave
 
-# some source installs
+#
+# Some source installs
+#
 mkdir $HOME/sourceinstalls
+
+# Install bsp-layouts
+curl https://raw.githubusercontent.com/phenax/bsp-layout/master/install.sh | bash -;
 
 # Install ly loginmanager
 cd $HOME/sourceinstalls
 apt install build-essential libpam0g-dev libxcb-xkb-dev
+wget https://ziglang.org/download/0.12.0/zig-linux-x86_64-0.12.0.tar.xz
+tar xf zig-linux-x86_64-0.12.0.tar.xz
+$ZIG=$HOME/sourceinstalls/zig-linux-x86_64-0.12.0/zig
 git clone --recurse-submodules https://github.com/fairyglade/ly
 cd ly
-make
-make install installsystemd
+$ZIG build
+$ZIG build installsystemd
 systemctl enable ly.service
 systemctl disable getty@tty2.service
 echo -e "#\n# Configured by Installscript\n#\nanimate=true\nbigclock=true\nblank_box=true\nhide_borders=true\nblank_password=true" >> /etc/ly/config.ini
-cd $builddir
 
 # Install webapp-manager
 cd $HOME/sourceinstalls
