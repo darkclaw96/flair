@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Function to display usage information
+usage() {
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "  -i, --increase N   Increase volume by N percent"
+    echo "  -d, --decrease N   Decrease volume by N percent"
+    echo "  -s, --set N        Set volume to N percent"
+    echo "  -m, --mute         Toggle mute/unmute"
+    echo "  -v, --show         Show current volume"
+    echo "  -h, --help         Show this help message"
+    exit 1
+}
+
+get_vol(){
+    pactl get-sink-volume $SINK | awk -W posix '/^Volume: / {gsub("%,?", ""); print $5; exit}'
+}
+
+SINK=$(pactl get-default-sink)
+VALUE=$2
+
+# Parse command-line options
+case "$1" in
+    -i|--increase)
+        pactl set-sink-volume $SINK +$VALUE%
+        ;;
+    -d|--decrease)
+        pactl set-sink-volume $SINK -$VALUE%
+        ;;
+    -m|--mute)
+        pactl set-sink-mute $SINK toggle
+        ;;
+    -s|--set)
+        pactl set-sink-volume $SINK $VALUE%
+        ;;
+    -v|--show)
+        get_vol
+        ;;
+    -h|--help)
+        usage
+        ;;
+    *)
+        echo "Invalid option $1"
+        ;;
+esac

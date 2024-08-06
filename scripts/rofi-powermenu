@@ -1,0 +1,14 @@
+#!/bin/bash
+chosen=$(echo -e "[Cancel]\nLock\nLogout\nShutdown\nReboot\nSuspend" | rofi -dmenu -theme menu -i -p "⏻")
+
+if [[ $chosen = "Lock" ]]; then
+    xsecurelock 
+elif [[ $chosen = "Logout" ]]; then
+    bspc quit
+elif  [[ $chosen = "Shutdown" ]]; then
+    sudo poweroff
+elif [[ $chosen = "Reboot" ]]; then
+    sudo reboot
+elif [[ $chosen = "Suspend" ]]; then
+    sudo systemctl suspend
+fi
