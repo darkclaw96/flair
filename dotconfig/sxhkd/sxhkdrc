@@ -4,37 +4,53 @@
 
 # terminal emulator or launcher
 super + {_, shift +} Return
-        {kitty, rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/polybar/scripts/rofi/launcher.rasi}
+        {kitty, rofi -no-config -no-lazy-grab -show drun -modi drun -theme launcher.rasi}
         
 # program launcher
 super + {_, shift +} @space
-        {dmenu_run, }
+        {dmenu_run -fn "FiraCode 36", $HOME/scripts/rofi-powermenu}
 
 # make sxhkd reload its configuration files:
 super + Escape
-        pkill -USR1 -x sxhkd && notify-send "sxhkd" "Reloaded"
+        pkill -USR1 -x sxhkd; notify-send "sxhkd" "Reloaded"
+
+# change tiling layout
+super + d
+        bsp-layout next --layouts tall,rtall,wide,rwide,grid; notify-send "bsp-layout" "$(bsp-layout get)"
 
 # kill current window
 super + shift + c
     	xdotool getwindowfocus windowkill
 
+# window switcher
+alt + Tab
+        rofi -show window -window-thumbnail -show-icons -theme-str 'element-icon \{size: 5ch; \}' -window-form -theme alttab.rasi
+
 # screenshot
 super + {_, shift + } p
         flameshot {gui, full -c} 
-
+# media
+{XF86AudioPrev, XF86AudioNext, XF86AudioPlay}
+        playerctl {previous, next, play-pause}
 # volume
-{XF86AudioRaiseVolume, XF86AudioLowerVolume} 
-        pulsemixer --change-volume {+, -}5
+{XF86AudioRaiseVolume, XF86AudioLowerVolume}
+        $HOME/scripts/i3-volume {up,down} 5 -nPy; polybar-msg action "#ipc-i3vol.hook.0" 
+        #pulsemixer --change-volume {+, -}5; cvlc $HOME/.config/Sounds/volume.wav
 XF86AudioMute
-        pulsemixer --toggle-mute
+        $HOME/scripts/i3-volume mute -nPy; polybar-msg action "#ipc-i3vol.hook.0" 
+        #pulsemixer --toggle-mute
 
 # brightness    
 {XF86MonBrightnessUp, XF86MonBrightnessDown}
         bash ~/.config/polybar/scripts/polybar-ipc-brightness.sh -{i,d}
 
 # browser 
-super + {_, shift + } b
+super +  b; {b,f}
     	{brave-browser,firefox}
+
+# lock
+super + x ; {l, s, o, r, x}
+        {xsecurelock, sudo systemctl suspend, sudo poweroff, sudo reboot, $HOME/scripts/rofi-powermenu}
 
 #
 # bspwm hotkeys
@@ -111,3 +127,9 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
         bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#
+# My shortcuts?
+#
+super + w ; p  
+       bspc node -t floating -g sticky; xdotool windowmove $(xdotool getactivewindow) 1260 660; xdotool windowsize $(xdotool getactivewindow) 640 400; notify-send "bspwm" "PiP active" 

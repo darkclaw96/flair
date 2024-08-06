@@ -1,22 +1,20 @@
 #!/bin/sh
-
-#### AUTOSTART ####
+bspc rule -r *
 ## SCRIPTS ##
-pgrep -x bspswallow|| exec $HOME/scripts/bspswallow &
-pgrep -x xdocorner || exec $HOME/scripts/xdocorner &
-pgrep -x sxhkd > /dev/null || sxhkd & #Hotkey daemon
-picom -fb & #Compositor
-nitrogen --restore & #set wallpaper
-
-# Reload Polybar when bspwm is restarted
-killall polybar && sleep 0.2
+pgrep -x bspswallow || exec $HOME/scripts/bspswallow &
+#### AUTOSTART ####
+pgrep -x sxhkd > /dev/null || sxhkd &       #Hotkey daemon
+picom -fb &                   #Compositor
+nitrogen --restore &                        #set wallpaper
+killall polybar && sleep 0.2                #polybar
 polybar -q bar --config=$HOME/.config/polybar/config.ini &
-
+killall -SIGUSR1 conky &
 pgrep -x kdeconnect-indicator > /dev/null | kdeconnect-indicator & #KDEConnect
-#pgrep -x nm-applet > /dev/null || nm-applet & #network-manager-gnome systray
-#killall blueman-tray && blueman-tray & #Bluetooth systray
-pgrep -x redshift-gtk > /dev/null||redshift-gtk & #Redshift
-pgrep -x caffeine-indicator > /dev/null || cafeine-indicator &  #Caffeine
+pgrep -x redshift-gtk > /dev/null || redshift-gtk & #Redshift
+pgrep caffeine > /dev/null || caffeine-indicator &  #Caffeine
+pgrep -x easyeffects > /dev/null || easyeffects --gapplication-service &  # audio effects
+
+xrdb -merge ~/.Xresources
 
 #### MONITORS ####
 bspc monitor $DISP1 -d 1 2 3 
@@ -24,12 +22,13 @@ bspc monitor $DISP1 -d 1 2 3
 #### WM CONFIG ####
 #bspc config border_radius                 8
 bspc config border_width                  3
-bspc config window_gap                    3
+bspc config window_gap                    2
 #bspc config top_padding                   20
 #bspc config bottom_padding                0
 #bspc config left_padding                  0
 #bspc config right_padding                 0
-bspc config single_monocle                false
+bspc config automatic scheme              spiral
+bspc config single_monocle                true
 bspc config click_to_focus                true
 bspc config split_ratio                   0.5
 bspc config borderless_monocle            true
@@ -43,10 +42,11 @@ bspc config pointer_modifier              mod4            # Super
 bspc config pointer_action1               move            # Left-click
 bspc config pointer_action2               resize_side     # Right-click
 bspc config pointer_action3               resize_corner   # Middle-click
+bspc config remove_disabled_monitors true
+bspc config merge_overlapping_monitors true
 
 wmname LG3D                                               #to handle java based programs
 xsetroot -cursor_name left_ptr &                          #to set default pointer
-
 
 #### COLORS ####
 bspc config normal_border_color               "#4c566a"
@@ -56,15 +56,18 @@ bspc config presel_feedback_color             "#5e81ac"
 bspc config urgent_border_color               "#dd2727"
 
 #### WINDOW RULES #####
+bspc rule -a '*:display-im6.q16' state=floating focus=on
+bspc rule -a '*:feh' state=floating focus=on
 bspc rule -a '*:yad' state=floating focus=on
+bspc rule -a '*:pavucontrol' state=floating focus=on
 
+#PiP
+bspc rule -a '*:*:Picture-in-Picture' state=floating sticky=on rectangle=640x400+1260+660
+bspc rule -a '*:*:Picture in picture' state=floating sticky=on rectangle=640x400+1260+660
+bspc rule -a 'livecaptions' state=floating sticky=on rectangle=1160x126+350+950
+
+bspc rule -a 'Thorium-browser' desktop='^1' follow=on focus=on
 bspc rule -a 'Brave-browser' desktop='^1' follow=on focus=on
-bspc rule -a 'firefox:*:*' desktop='^2' follow=on focus=on
-bspc rule -a 'Jellyfin Media Player' desktop='^3' follow=on focus=on
+bspc rule -a 'Firefox-esr:Navigator:*' desktop='^2' follow=on focus=on
+bspc rule -a 'Jellyfin Media Player' desktop='^3' state=monocled follow=on focus=on
 
-# examples
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Chromium desktop='^2'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off

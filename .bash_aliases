@@ -3,7 +3,7 @@ export PATH="$HOME/scripts/:$PATH" #for scripts
 export PATH="$HOME/.local/bin:$PATH" #for pip
 
 ## STARTUP
-command hello.sh
+command hello.sh  
 
 ### ALIASES
 #vim
@@ -35,7 +35,8 @@ alias s720='xrandr -s 1280x720'
 # bspwm
 alias bsp='vim $HOME/.config/bspwm/bspwmrc'
 alias hkd='vim $HOME/.config/sxhkd/sxhkdrc'
-
+# run some folder specific command
+alias run='$(cat cmdrun)'
 ### Package management
 alias aptup='sudo nala upgrade'
 alias aptupd='sudo apt update'
@@ -107,6 +108,12 @@ ex ()
   else
     echo "'$1' is not a valid file"
   fi
+}
+
+# play audio
+playaudio(){
+    file=$1
+    paplay "$file" &
 }
 
 ### Sync bash aliases from github

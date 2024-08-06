@@ -6,7 +6,8 @@ tx_bytes_old=0
 while true; do
     rx_bytes_new=0
     tx_bytes_new=0
-    for iface in $(ls /sys/class/net/ | grep -E '^(en|eth|wlan|wl|tun|tap)'); do
+    for iface in $(ls /sys/class/net/ | grep -E '^(en|eth|lo)'); do
+    #for iface in $(ls /sys/class/net/ | grep -E '^(en|eth|wlan|wl|tun|tap)'); do
         stats=$(cat /sys/class/net/"$iface"/statistics/{rx,tx}_bytes 2>/dev/null || echo 0 0)
         read -r rx_bytes tx_bytes <<< "$stats"
         rx_bytes_new=$((rx_bytes_new + rx_bytes))

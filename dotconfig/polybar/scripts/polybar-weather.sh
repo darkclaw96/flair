@@ -1,40 +1,25 @@
 #!/bin/bash
-
-# Set the location
 location="Cologne"
 
-# Get the formatted weather information from wttr.in
-weather=$(curl -s "wttr.in/$location?format=%c\n%C\n%t\n%w" -H "Accept-Language: en" --compressed)
-#if [[ $weather !=~ "^[Unknown]*" ]]; then # regex check to see if response was good
-    icon=$(echo "$weather" | sed -n 1p)
-    condition=$(echo "$weather" | sed -n 2p)
-    temperature=$(echo "$weather" | sed -n 3p)
-    wind=$(echo "$weather" | sed -n 4p)
-#else
-#    echo ""
-#fi
-
-# Parse the command line arguments
-while getopts ":sftim" opt; do
-  case $opt in
-    s)
-        echo -e "$icon $condition\n$temperature\t$wind" | yad --text-info --no-buttons --geometry=500x100-200+50 --justify=center --title="Weather" --fontname="FiraCode 24" --close-on-unfocus
-      ;;
-    f)
-        w3m -dump wttr.in/$location | yad --text-info --geometry=1010x800 --title="Weather"
-      ;;
-    t)
-        # Get only the cuurent temperature
-        echo "$temperature" | awk -F "°" '{print $1}'
-      ;;
-    i)
-        # Get the weather condition emoji
-        echo $icon
-      ;;
-    m)
-        # Print icon and temperature
-        temp=$(echo "$temperature" | awk -F "°" '{print $1}')
-        echo -e "${icon:0:1}$temp"
-      ;;
-     esac
-done
+case $1 in
+    -n)
+        weather=$(curl -s "wttr.in/$location?format=%c%C\n%t(%f)\t%w")
+        notify-send "Weather" "$weather"
+        #echo -e "$weather" | yad --text-info --no-buttons --geometry=500x100-200+50 --justify=center --title="Weather" --fontname="FiraCode 24"
+        ;;
+    -f)
+        bspc rule -a kitty -o state=floating rectangle=1280x720+300+200
+        kitty sh -c "w3m wttr.in/$location"
+        #w3m -dump wttr.in/$location | yad --text-info --geometry=1010x800 --title="Weather"
+        ;;
+    -t) # Get only the current temperature
+        echo $(curl -s "wttr.in/$location?format=%t")
+        ;;
+    -i) # Get the weather condition emoji
+        echo $(curl -s "wttr.in/$location?format=%c")
+        ;;
+    -m) # Print icon and temperature
+        msg=$(curl -s "wttr.in/$location?format=%c+%t")
+        echo $msg | sed -E -n 's/([^ ]+) +([-+][0-9]+)°C.*/\1\2/p'
+        ;;
+esac

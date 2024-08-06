@@ -1,9 +1,12 @@
 #!/bin/bash
 
-WM_NAME=$(xdotool getwindowfocus getwindowname)
+winname=$(xdotool getwindowfocus getwindowname)
 
-if [ "$WM_NAME" != "LG3D" ]; then
-	echo -e ${WM_NAME:0:$1}
+if [ "$winname" != "LG3D" ]; then
+	echo $winname
+	#echo -e ${winname:0:$1}
+elif [ "$winname" == ""  ]; then
+    echo ""
 else
-	echo ""
+    echo "  ¯\_(ツ)_/¯  "
 fi

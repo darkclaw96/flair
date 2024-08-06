@@ -10,12 +10,7 @@ random_file=$(ls $folder_path | shuf -n 1)
 random_message=$(grep -v '^$' "$folder_path/$random_file" | shuf -n 1)
 
 # Select a random color for the message
-colors=$(tput colors)
-if [[ $colors -ge 16 ]]; then
-    random_color=$((0 + RANDOM % 16))
-else
-    random_color=9
-fi
+random_fg=$((0 + RANDOM % 32))
 
-echo -e "\n\t$(tput setaf $random_color)${random_message}$(tput sgr0)\n"
+echo -e "\n\t$(tput setaf $random_fg)${random_message}$(tput sgr0)\n"
 
