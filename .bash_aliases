@@ -83,6 +83,15 @@ cd ()
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
+# rofi
+alias rofichoose='rofi -dmenu -i -theme menu.rasi -p $1 $2'
+
+# Python venvs
+alias venvmk='python -m venv . && echo $(realpath .) >> ~/venvs'
+alias venvgo='cd $(cat ~/venvs | rofichoose "Choose venv:" $1) && source $(realpath .)/bin/activate'
+#alias venvgo='cd $(cat ~/venvs | rofi -dmenu -i -p "Choose venv:" $1) && source $(realpath .)/bin/activate'
+
 ### ARCHIVE EXTRACTION
 # usage: ex <file>
 ex ()
