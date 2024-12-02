@@ -45,6 +45,9 @@ alias aptin='sudo nala install'
 alias aptrm='sudo nala remove'
 alias apts='nala search'
 
+# QR
+alias qr='qrencode -t ansiutf8 '
+
 ### NAVIGATION
 up () {
   local d=""
